@@ -94,4 +94,4 @@ ADD errors/ /var/www/errors/
 
 EXPOSE 80 443
 
-CMD ["/start.sh"]
+CMD ["nginx", "-g", "daemon off;"]
