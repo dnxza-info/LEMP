@@ -25,40 +25,23 @@ RUN apt-get install openssh-client \
     curl \
     git \
 	php5-fpm \
-	php5-pdo \
-    php5-pdo_mysql \
     php5-mysql \
-    php5-mysqli \
     php5-mcrypt \
-    php5-ctype \
-    php5-zlib \
     php5-gd \
     php5-intl \
     php5-memcache \
-    php5-sqlite3 \
     php5-pgsql \
-    php5-xml \
     php5-xsl \
     php5-curl \
-    php5-openssl \
-    php5-iconv \
     php5-json \
-    php5-phar \
-    php5-soap \
-    php5-dom \
     python \
     python-dev \
-    py-pip \
-    augeas-dev \
-    openssl-dev \
 	&& rm -rf /var/lib/apt/lists/*
 	
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
     php -r "if (hash_file('SHA384', 'composer-setup.php') === '${composer_hash}') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" && \
     php composer-setup.php --install-dir=/usr/bin --filename=composer && \
-    php -r "unlink('composer-setup.php');" && \
-    pip install -U certbot && \
-    mkdir -p /etc/letsencrypt/webrootauth 
+    php -r "unlink('composer-setup.php');"
 
 # forward request and error logs to docker log collector
 RUN ln -sf /dev/stdout /var/log/nginx/access.log \
@@ -104,8 +87,6 @@ find /etc/php5/conf.d/ -name "*.ini" -exec sed -i -re 's/^(\s*)#(.*)/\1;\2/g' {}
 ADD scripts/start.sh /start.sh
 ADD scripts/pull /usr/bin/pull
 ADD scripts/push /usr/bin/push
-ADD scripts/letsencrypt-setup /usr/bin/letsencrypt-setup
-ADD scripts/letsencrypt-renew /usr/bin/letsencrypt-renew
 RUN chmod 755 /usr/bin/pull && chmod 755 /usr/bin/push && chmod 755 /usr/bin/letsencrypt-setup && chmod 755 /usr/bin/letsencrypt-renew && chmod 755 /start.sh
 
 # copy in code
