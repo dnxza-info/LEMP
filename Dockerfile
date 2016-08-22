@@ -52,13 +52,11 @@ RUN apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys 573BFD6B3D8FBC64107
     py-pip \
     augeas-dev \
     openssl-dev \
-    ca-certificates \
     dialog \
     gcc \
     musl-dev \
     linux-headers \
-    libffi-dev
-	
+    libffi-dev \	
 	&& rm -rf /var/lib/apt/lists/* \
 	&& php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
     php -r "if (hash_file('SHA384', 'composer-setup.php') === '${composer_hash}') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" && \
