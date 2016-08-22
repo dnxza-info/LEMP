@@ -22,7 +22,6 @@ RUN apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys 573BFD6B3D8FBC64107
 						
 RUN apt-get install openssh-client \
     wget \
-    supervisor \
     curl \
     git \
 	php5-fpm \
@@ -52,11 +51,6 @@ RUN apt-get install openssh-client \
     py-pip \
     augeas-dev \
     openssl-dev \
-    dialog \
-    gcc \
-    musl-dev \
-    linux-headers \
-    libffi-dev \
 	&& rm -rf /var/lib/apt/lists/*
 	
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
