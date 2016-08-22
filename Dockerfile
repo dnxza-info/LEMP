@@ -2,6 +2,7 @@ FROM debian:jessie
 
 MAINTAINER DNX DragoN "ratthee.jar.hotmail.com"
 
+ENV NGINX_VERSION 1.10.1-1~jessie
 ENV php_conf /etc/php5/php.ini
 ENV fpm_conf /etc/php5/php-fpm.conf
 ENV composer_hash e115a8dc7871f15d853148a7fbac7da27d6c0030b848d9b3dc09e2a0388afed865e6a3d6b3c0fad45c48e2b5fc1196ae
