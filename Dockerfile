@@ -18,9 +18,9 @@ RUN apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys 573BFD6B3D8FBC64107
 						nginx-module-image-filter \
 						nginx-module-perl \
 						nginx-module-njs \
-						gettext-base \
+						gettext-base 
 						
-	&& apt-get install openssh-client \
+RUN apt-get install openssh-client \
     wget \
     supervisor \
     curl \
@@ -56,9 +56,10 @@ RUN apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys 573BFD6B3D8FBC64107
     gcc \
     musl-dev \
     linux-headers \
-    libffi-dev \	
-	&& rm -rf /var/lib/apt/lists/* \
-	&& php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
+    libffi-dev \
+	&& rm -rf /var/lib/apt/lists/*
+	
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
     php -r "if (hash_file('SHA384', 'composer-setup.php') === '${composer_hash}') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" && \
     php composer-setup.php --install-dir=/usr/bin --filename=composer && \
     php -r "unlink('composer-setup.php');" && \
