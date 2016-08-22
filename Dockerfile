@@ -20,7 +20,7 @@ RUN apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys 573BFD6B3D8FBC64107
 						nginx-module-njs \
 						gettext-base 
 						
-RUN apt-get install openssh-client \
+RUN apt-get install -y openssh-client \
     wget \
     curl \
     git \
