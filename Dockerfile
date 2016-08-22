@@ -19,21 +19,14 @@ RUN apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys 573BFD6B3D8FBC64107
 						nginx-module-perl \
 						nginx-module-njs \
 						gettext-base \
-	&& rm -rf /var/lib/apt/lists/*
-
-# forward request and error logs to docker log collector
-RUN ln -sf /dev/stdout /var/log/nginx/access.log \
-	&& ln -sf /dev/stderr /var/log/nginx/error.log
-	
-	
-	RUN apk add --no-cache bash \
-    openssh-client \
+						
+	&& apt-get install openssh-client \
     wget \
     supervisor \
     curl \
     git \
-    php5-fpm \
-    php5-pdo \
+	php5-fpm \
+	php5-pdo \
     php5-pdo_mysql \
     php5-mysql \
     php5-mysqli \
@@ -64,18 +57,19 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log \
     gcc \
     musl-dev \
     linux-headers \
-    libffi-dev &&\
-    mkdir -p /etc/nginx && \
-    mkdir -p /var/www/app && \
-    mkdir -p /run/nginx && \
-    mkdir -p /var/log/supervisor &&\
-    php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
+    libffi-dev
+	
+	&& rm -rf /var/lib/apt/lists/* \
+	&& php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
     php -r "if (hash_file('SHA384', 'composer-setup.php') === '${composer_hash}') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" && \
     php composer-setup.php --install-dir=/usr/bin --filename=composer && \
     php -r "unlink('composer-setup.php');" && \
     pip install -U certbot && \
-    mkdir -p /etc/letsencrypt/webrootauth && \
-    apk del gcc musl-dev linux-headers libffi-dev augeas-dev python-dev
+    mkdir -p /etc/letsencrypt/webrootauth 
+
+# forward request and error logs to docker log collector
+RUN ln -sf /dev/stdout /var/log/nginx/access.log \
+	&& ln -sf /dev/stderr /var/log/nginx/error.log
 	
 # Copy our nginx config
 RUN rm -Rf /etc/nginx/nginx.conf
