@@ -57,8 +57,8 @@ RUN rm -Rf /etc/nginx/conf.d/default.conf
 ADD conf/nginx-site.conf /etc/nginx/conf.d/default.conf
 
 # copy in code
-ADD src/ /var/www/html/
-ADD errors/ /var/www/errors/
+ADD src/ /usr/share/nginx/html/
+ADD errors/ /usr/share/nginx/errors/
 
 RUN apt-get update && apt-get install -y software-properties-common \
 && rm -rf /var/lib/apt/lists/*
