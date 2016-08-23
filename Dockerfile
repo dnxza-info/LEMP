@@ -78,4 +78,5 @@ ADD scripts/start.sh /start.sh
 
 EXPOSE 80 443 3306
 
-CMD ["/start.sh"]
+#CMD ["/start.sh"]
+CMD ["/bin/bash"]
