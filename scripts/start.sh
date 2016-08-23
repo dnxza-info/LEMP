@@ -1,4 +1,5 @@
 #!/bin/bash
 
-# Start supervisord and services
-/usr/bin/supervisord -n -c /etc/supervisord.conf
+service nginx start
+service php5-fpm start
+service mysql start
