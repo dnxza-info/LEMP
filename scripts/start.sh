@@ -4,4 +4,5 @@ service nginx start
 service php5-fpm start
 service mysql start
 
-exec "$@"
+trap 'exit 0' SIGTERM
+while true; do :; done
