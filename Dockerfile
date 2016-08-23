@@ -60,7 +60,7 @@ ADD errors/ /var/www/errors/
 RUN debconf-set-selections <<< 'mariadb-server-10.1 mysql-server/root_password password password' \
 && debconf-set-selections <<< 'mariadb-server-10.1 mysql-server/root_password_again password password' \
 && apt-get update && apt-get install -y software-properties-common && apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db \
-&& add-apt-repository 'deb [arch=amd64,i386] http://mirrors.bestthaihost.com/mariadb/repo/10.1/debian jessie main' && apt-get update \
+&& add-apt-repository 'deb [arch=amd64,i386] http://mirrors.accretive-networks.net/mariadb/repo/10.1/debian jessie main' && apt-get update \
 && apt-get install -y mariadb-server && rm -rf /var/lib/apt/lists/*
 
 EXPOSE 80 443 3306
