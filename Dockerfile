@@ -5,6 +5,7 @@ MAINTAINER DNX DragoN "ratthee.jar@hotmail.com"
 ENV NGINX_VERSION 1.10.1-1~jessie
 ENV php_conf /etc/php5/fpm/php.ini
 ENV fpm_conf /etc/php5/fpm/php-fpm.conf
+ENV MYSQLPASS password
 
 RUN apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys 573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62 \
 	&& echo "deb http://nginx.org/packages/debian/ jessie nginx" >> /etc/apt/sources.list \
@@ -63,8 +64,8 @@ RUN apt-get update && apt-get install -y software-properties-common \
 RUN apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db \
 && add-apt-repository 'deb [arch=amd64,i386] http://mirrors.accretive-networks.net/mariadb/repo/10.1/debian jessie main'
 
-RUN debconf-set-selections <<< 'mariadb-server-10.1 mysql-server/root_password password password' \
-&& debconf-set-selections <<< 'mariadb-server-10.1 mysql-server/root_password_again password password'
+RUN echo mariadb-server-10.1 mysql-server/root_password password ${MYSQLPASS} | debconf-set-selections;\
+echo mariadb-server-10.1 mysql-server/root_password_again password ${MYSQLPASS} | debconf-set-selections;\
 
 RUN apt-get update \
 && apt-get install -y mariadb-server \
