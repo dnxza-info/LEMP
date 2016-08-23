@@ -48,6 +48,8 @@ sed -i -e "s/;listen.group = nobody/listen.group = nginx/g" ${fpm_conf} && \
 sed -i -e "s/listen = 127.0.0.1:9000/listen = \/var\/run\/php-fpm.sock/g" ${fpm_conf} &&\
 sed -i -e "s/^;clear_env = no$/clear_env = no/" ${fpm_conf};
 
+ADD conf/supervisord.conf /etc/supervisord.conf
+
 # Copy our nginx config
 RUN rm -Rf /etc/nginx/nginx.conf
 ADD conf/nginx.conf /etc/nginx/nginx.conf
@@ -68,7 +70,7 @@ RUN echo mariadb-server-10.1 mysql-server/root_password password $MYSQLPASS | de
 echo mariadb-server-10.1 mysql-server/root_password_again password $MYSQLPASS | debconf-set-selections;
 
 RUN apt-get update \
-&& apt-get install -y mariadb-server \
+&& apt-get install -y mariadb-server supervisor \
 && rm -rf /var/lib/apt/lists/*
 
 # Add Scripts
