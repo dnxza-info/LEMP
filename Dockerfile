@@ -76,8 +76,8 @@ RUN apt-get update \
 # Add Scripts
 ADD scripts/start.sh /start.sh
 
+ENTRYPOINT ["/start.sh"]
+
 EXPOSE 80 443 3306
 
-#CMD ["/start.sh"]
-#CMD ["/bin/bash"]
-CMD ["/bin/bash", "/start.sh", "start"] 
+CMD ["/bin/bash"]
