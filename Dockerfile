@@ -3,8 +3,8 @@ FROM debian:jessie
 MAINTAINER DNX DragoN "ratthee.jar@hotmail.com"
 
 ENV NGINX_VERSION 1.10.1-1~jessie
-ENV php_conf /etc/php5/php.ini
-ENV fpm_conf /etc/php5/php-fpm.conf
+ENV php_conf /etc/php5/fpm/php.ini
+ENV fpm_conf /etc/php5/fpm/php-fpm.conf
 
 RUN apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys 573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62 \
 	&& echo "deb http://nginx.org/packages/debian/ jessie nginx" >> /etc/apt/sources.list \
