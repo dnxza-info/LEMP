@@ -57,11 +57,18 @@ ADD conf/nginx-site.conf /etc/nginx/conf.d/default.conf
 ADD src/ /var/www/html/
 ADD errors/ /var/www/errors/
 
+RUN apt-get update && apt-get install -y software-properties-common \
+&& rm -rf /var/lib/apt/lists/*
+
+RUN apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db \
+&& add-apt-repository 'deb [arch=amd64,i386] http://mirrors.accretive-networks.net/mariadb/repo/10.1/debian jessie main'
+
 RUN debconf-set-selections <<< 'mariadb-server-10.1 mysql-server/root_password password password' \
-&& debconf-set-selections <<< 'mariadb-server-10.1 mysql-server/root_password_again password password' \
-&& apt-get update && apt-get install -y software-properties-common && apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db \
-&& add-apt-repository 'deb [arch=amd64,i386] http://mirrors.accretive-networks.net/mariadb/repo/10.1/debian jessie main' && apt-get update \
-&& apt-get install -y mariadb-server && rm -rf /var/lib/apt/lists/*
+&& debconf-set-selections <<< 'mariadb-server-10.1 mysql-server/root_password_again password password'
+
+RUN apt-get update \
+&& apt-get install -y mariadb-server \
+&& rm -rf /var/lib/apt/lists/*
 
 # Add Scripts
 ADD scripts/start.sh /start.sh
