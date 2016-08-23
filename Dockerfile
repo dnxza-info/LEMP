@@ -63,6 +63,9 @@ RUN debconf-set-selections <<< 'mariadb-server-10.1 mysql-server/root_password p
 && add-apt-repository 'deb [arch=amd64,i386] http://mirrors.accretive-networks.net/mariadb/repo/10.1/debian jessie main' && apt-get update \
 && apt-get install -y mariadb-server && rm -rf /var/lib/apt/lists/*
 
+# Add Scripts
+ADD scripts/start.sh /start.sh
+
 EXPOSE 80 443 3306
 
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["/start.sh"]
