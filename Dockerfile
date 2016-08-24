@@ -48,8 +48,6 @@ sed -i -e "s/;listen.group = nobody/listen.group = nginx/g" ${fpm_conf} && \
 sed -i -e "s/listen = 127.0.0.1:9000/listen = \/var\/run\/php-fpm.sock/g" ${fpm_conf} &&\
 sed -i -e "s/^;clear_env = no$/clear_env = no/" ${fpm_conf};
 
-ADD conf/supervisord.conf /etc/supervisord.conf
-
 # Copy our nginx config
 RUN rm -Rf /etc/nginx/nginx.conf
 ADD conf/nginx.conf /etc/nginx/nginx.conf
