@@ -25,7 +25,7 @@ RUN apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys 573BFD6B3D8FBC64107
 RUN ln -sf /dev/stdout /var/log/nginx/access.log \
 	&& ln -sf /dev/stderr /var/log/nginx/error.log
 	
-RUN apt-get update && apt-get install -y curl php5-fpm php5-mysql php5-mcrypt php5-gd php5-intl php5-memcache php5-xsl php5-curl php5-json \
+RUN apt-get update && apt-get install -y nano curl php5-fpm php5-mysql php5-mcrypt php5-gd php5-intl php5-memcache php5-xsl php5-curl php5-json \
 	&& rm -rf /var/lib/apt/lists/*
 	
 # tweak php-fpm config
@@ -68,14 +68,18 @@ RUN echo mariadb-server-10.1 mysql-server/root_password password $MYSQLPASS | de
 echo mariadb-server-10.1 mysql-server/root_password_again password $MYSQLPASS | debconf-set-selections;
 
 RUN apt-get update \
-&& apt-get install -y mariadb-server \
+&& apt-get install -y mariadb-server supervisor \
 && rm -rf /var/lib/apt/lists/*
+
+RUN sed -i -e"s/^bind-address\s*=\s*127.0.0.1/bind-address = 0.0.0.0/" /etc/mysql/my.cnf
 
 # Add Scripts
 ADD scripts/start.sh /start.sh
+
+COPY conf/supervisord.conf /etc/supervisord.conf
 
 EXPOSE 80 443 3306
 
 #CMD ["/start.sh"]
 #CMD ["/bin/bash"]
-CMD [ "/bin/bash", "/start.sh", "start" ] 
+CMD [ "/bin/bash", "/start.sh", "start" ]
