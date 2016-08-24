@@ -68,7 +68,7 @@ RUN echo mariadb-server-10.1 mysql-server/root_password password $MYSQLPASS | de
 echo mariadb-server-10.1 mysql-server/root_password_again password $MYSQLPASS | debconf-set-selections;
 
 RUN apt-get update \
-&& apt-get install -y mariadb-server \
+&& apt-get install -y mariadb-server supervisor \
 && rm -rf /var/lib/apt/lists/*
 
 RUN sed -i -e"s/^bind-address\s*=\s*127.0.0.1/bind-address = 0.0.0.0/" /etc/mysql/my.cnf
@@ -76,8 +76,14 @@ RUN sed -i -e"s/^bind-address\s*=\s*127.0.0.1/bind-address = 0.0.0.0/" /etc/mysq
 # Add Scripts
 ADD scripts/start.sh /start.sh
 
+COPY conf/supervisord.conf /etc/supervisord.conf
+
 EXPOSE 80 443 3306
+
+RUN mysql_install_db /
+&& /usr/bin/mysqld_safe & sleep 10s
+
 
 #CMD ["/start.sh"]
 #CMD ["/bin/bash"]
-CMD [ "/bin/bash", "/start.sh", "start" ] 
+CMD [ "/bin/bash", "/start.sh", "start" ]
