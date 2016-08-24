@@ -70,7 +70,7 @@ RUN echo mariadb-server-10.1 mysql-server/root_password password $MYSQLPASS | de
 echo mariadb-server-10.1 mysql-server/root_password_again password $MYSQLPASS | debconf-set-selections;
 
 RUN apt-get update \
-&& apt-get install -y mariadb-server supervisor \
+&& apt-get install -y mariadb-server \
 && rm -rf /var/lib/apt/lists/*
 
 # Add Scripts
