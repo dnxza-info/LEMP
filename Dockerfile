@@ -71,6 +71,8 @@ RUN apt-get update \
 && apt-get install -y mariadb-server \
 && rm -rf /var/lib/apt/lists/*
 
+RUN sed -i -e"s/^bind-address\s*=\s*127.0.0.1/bind-address = 0.0.0.0/" /etc/mysql/my.cnf
+
 # Add Scripts
 ADD scripts/start.sh /start.sh
 
