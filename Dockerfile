@@ -1,29 +1,10 @@
-FROM debian:jessie
+FROM nginx:stable
 
 MAINTAINER DNX DragoN "ratthee.jar@hotmail.com"
 
-ENV NGINX_VERSION 1.10.1-1~jessie
 ENV php_conf /etc/php5/fpm/php.ini
 ENV fpm_conf /etc/php5/fpm/php-fpm.conf
 ENV MYSQLPASS password
-
-RUN apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys 573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62 \
-	&& echo "deb http://nginx.org/packages/debian/ jessie nginx" >> /etc/apt/sources.list \
-	&& apt-get update \
-	&& apt-get install --no-install-recommends --no-install-suggests -y \
-						ca-certificates \
-						nginx=${NGINX_VERSION} \
-						nginx-module-xslt \
-						nginx-module-geoip \
-						nginx-module-image-filter \
-						nginx-module-perl \
-						nginx-module-njs \
-						gettext-base \
-	&& rm -rf /var/lib/apt/lists/*
-
-# forward request and error logs to docker log collector
-RUN ln -sf /dev/stdout /var/log/nginx/access.log \
-	&& ln -sf /dev/stderr /var/log/nginx/error.log
 	
 RUN apt-get update && apt-get install -y nano curl php5-fpm php5-mysql php5-mcrypt php5-gd php5-intl php5-memcache php5-xsl php5-curl php5-json \
 	&& rm -rf /var/lib/apt/lists/*
