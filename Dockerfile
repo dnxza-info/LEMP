@@ -80,10 +80,6 @@ COPY conf/supervisord.conf /etc/supervisord.conf
 
 EXPOSE 80 443 3306
 
-RUN mysql_install_db /
-&& /usr/bin/mysqld_safe & sleep 10s
-
-
 #CMD ["/start.sh"]
 #CMD ["/bin/bash"]
 CMD [ "/bin/bash", "/start.sh", "start" ]
