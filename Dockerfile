@@ -25,7 +25,7 @@ RUN apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys 573BFD6B3D8FBC64107
 RUN ln -sf /dev/stdout /var/log/nginx/access.log \
 	&& ln -sf /dev/stderr /var/log/nginx/error.log
 	
-RUN apt-get update && apt-get install -y curl php5-fpm php5-mysql php5-mcrypt php5-gd php5-intl php5-memcache php5-xsl php5-curl php5-json \
+RUN apt-get update && apt-get install -y nano curl php5-fpm php5-mysql php5-mcrypt php5-gd php5-intl php5-memcache php5-xsl php5-curl php5-json \
 	&& rm -rf /var/lib/apt/lists/*
 	
 # tweak php-fpm config
