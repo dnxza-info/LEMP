@@ -2,20 +2,6 @@
 
 #service nginx start
 #service php5-fpm start
-
-if [ ! -f /var/lib/mysql/ibdata1 ]; then
-
-	mysql_install_db
-
-	/usr/bin/mysqld_safe &
-	sleep 10s
-
-	echo "GRANT ALL PRIVILEGES ON *.* TO 'admin'@'%' IDENTIFIED BY 'password' WITH GRANT OPTION;FLUSH PRIVILEGES;" | mysql -uroot -p$MYSQLPASS
-
-	killall mysqld
-	sleep 10s
-fi
-
 #/usr/bin/mysqld_safe
 
 # Start supervisord and services

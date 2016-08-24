@@ -73,6 +73,9 @@ RUN apt-get update \
 
 RUN sed -i -e"s/^bind-address\s*=\s*127.0.0.1/bind-address = 0.0.0.0/" /etc/mysql/my.cnf
 
+RUN /usr/bin/mysqld_safe & sleep 10s \
+&& echo "GRANT ALL PRIVILEGES ON *.* TO 'admin'@'%' IDENTIFIED BY 'password' WITH GRANT OPTION;FLUSH PRIVILEGES;" | mysql -uroot -p$MYSQLPASS
+
 # Add Scripts
 ADD scripts/start.sh /start.sh
 
